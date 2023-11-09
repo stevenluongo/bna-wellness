@@ -16,6 +16,7 @@ export async function createUser(formData: User) {
       lastName,
       hash,
       salt,
+      role: "ADMIN",
     },
   });
 

@@ -12,11 +12,153 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  username  String   @unique
-  firstName String
-  lastName  String
-  hash      String
-  salt      String
+  id              String     @id @default(cuid())
+  createdAt       DateTime   @default(now())
+  username        String     @unique
+  salt            String
+  hash            String
+  firstName       String
+  lastName        String
+  role            UserRole
+  openedTerminals Terminal[] @relation(name: "openedTerminals")
+  closedTerminals Terminal[] @relation(name: "closedTerminals")
 }
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model Terminal {
+  id         String               @id @default(cuid())
+  createdAt  DateTime             @default(now())
+  updatedAt  DateTime             @updatedAt
+  isActive   Boolean              @default(true)
+  closedAt   DateTime?
+  totalSales Int?
+  location   TerminalLocationType
+  openedBy   User                 @relation(name: "openedTerminals", fields: [openedById], references: [id])
+  closedBy   User?                @relation(name: "closedTerminals", fields: [closedById], references: [id])
+  openedById String
+  closedById String?
+}
+
+enum TerminalLocationType {
+  FITNESS
+}
+
+// model Client {
+//   id               Int            @id @default(autoincrement())
+//   createdAt        DateTime       @default(now())
+//   updatedAt        DateTime       @updatedAt
+//   firstName        String
+//   lastName         String
+//   email            String?
+//   notes            String[]
+//   age              Int?
+//   homeNumber       String?
+//   cellNumber       String?
+//   stripeCustomerId String?
+//   address          ClientAddress? @relation(fields: [addressId], references: [id])
+//   addressId        Int?           @unique
+//   subcriptions     Subscription[]
+//   image            String?
+// }
+
+// model ClientAddress {
+//   id         Int     @id @default(autoincrement())
+//   line1      String?
+//   line2      String?
+//   city       String?
+//   state      String?
+//   postalCode String?
+//   country    String?
+//   client     Client?
+// }
+
+// model Membership {
+//   id              Int                    @id @default(autoincrement())
+//   createdAt       DateTime               @default(now())
+//   name            String
+//   description     String
+//   isActive        Boolean                @default(true)
+//   stripePriceId   String
+//   stripeProductId String
+//   unitAmount      Int
+//   interval        MembershipIntervalType
+//   intervalCount   Int
+//   subscriptions   Subscription[]
+// }
+
+// enum MembershipIntervalType {
+//   month
+//   year
+//   week
+//   day
+// }
+
+// model Subscription {
+//   id                      Int                                      @id @default(autoincrement())
+//   createdAt               DateTime                                 @default(now())
+//   isActive                Boolean                                  @default(true)
+//   cancelAtPeriodEnd       Boolean
+//   currentPeriodEnd        DateTime
+//   currentPeriodStart      DateTime
+//   defaultPaymentMethod    String
+//   membership              Membership                               @relation(fields: [membershipId], references: [id])
+//   membershipId            Int
+//   stripeCustomerId        String
+//   stripeSubscriptionId    String
+//   stripePriceId           String
+//   billingCycleAnchor      DateTime
+//   status                  SubscriptionStatusType
+//   canceledAt              DateTime?
+//   cancellationDetails     SubscriptionCancellation?
+//   pauseCollectionBehavior SubscriptionPauseCollectionBehaviorType?
+//   latestInvoice           String
+//   client                  Client                                   @relation(fields: [clientId], references: [id])
+//   clientId                Int
+// }
+
+// enum SubscriptionPauseCollectionBehaviorType {
+//   keep_as_draft
+//   mark_uncollectible
+//   void
+// }
+
+// enum SubscriptionStatusType {
+//   active
+//   past_due
+//   unpaid
+//   canceled
+//   incomplete
+//   incomplete_expired
+//   trialing
+//   paused
+// }
+
+// model SubscriptionCancellation {
+//   id             Int                                  @id @default(autoincrement())
+//   comment        String
+//   feedback       SubscriptionCancellationFeedbackType
+//   reason         SubscriptionCancellationReasonType
+//   subscription   Subscription                         @relation(fields: [subscriptionId], references: [id])
+//   subscriptionId Int                                  @unique
+// }
+
+// enum SubscriptionCancellationFeedbackType {
+//   too_expensive
+//   missing_features
+//   switched_service
+//   unused
+//   customer_service
+//   too_complex
+//   low_quality
+//   other
+// }
+
+// enum SubscriptionCancellationReasonType {
+//   cancellation_requested
+//   payment_disputed
+//   payment_failed
+// }

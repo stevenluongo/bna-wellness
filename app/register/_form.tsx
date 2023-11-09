@@ -10,7 +10,7 @@ export default function Form() {
   const { register, handleSubmit, reset } = useForm<User>();
   const { data: session } = useSession();
   const action: () => void = handleSubmit(async (data) => {
-    const response = await createUser(data);
+    await createUser(data);
     signIn();
     reset();
   });
