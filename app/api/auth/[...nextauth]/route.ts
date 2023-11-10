@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { authenticate } from "@/lib/auth";
 import { JWT } from "next-auth/jwt";
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
