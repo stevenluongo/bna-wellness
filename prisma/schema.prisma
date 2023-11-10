@@ -62,6 +62,7 @@ model Client {
   address          ClientAddress? @relation(fields: [addressId], references: [id])
   addressId        String?        @unique
   image            String?
+  totalSpend       Int?
 }
 
 model ClientAddress {
