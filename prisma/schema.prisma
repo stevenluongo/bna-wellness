@@ -47,34 +47,33 @@ enum TerminalLocationType {
   FITNESS
 }
 
-// model Client {
-//   id               Int            @id @default(autoincrement())
-//   createdAt        DateTime       @default(now())
-//   updatedAt        DateTime       @updatedAt
-//   firstName        String
-//   lastName         String
-//   email            String?
-//   notes            String[]
-//   age              Int?
-//   homeNumber       String?
-//   cellNumber       String?
-//   stripeCustomerId String?
-//   address          ClientAddress? @relation(fields: [addressId], references: [id])
-//   addressId        Int?           @unique
-//   subcriptions     Subscription[]
-//   image            String?
-// }
+model Client {
+  id               String         @id @default(cuid())
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  firstName        String
+  lastName         String
+  email            String?
+  notes            String[]
+  age              Int?
+  homeNumber       String?
+  cellNumber       String?
+  stripeCustomerId String?
+  address          ClientAddress? @relation(fields: [addressId], references: [id])
+  addressId        String?        @unique
+  image            String?
+}
 
-// model ClientAddress {
-//   id         Int     @id @default(autoincrement())
-//   line1      String?
-//   line2      String?
-//   city       String?
-//   state      String?
-//   postalCode String?
-//   country    String?
-//   client     Client?
-// }
+model ClientAddress {
+  id         String  @id @default(cuid())
+  line1      String?
+  line2      String?
+  city       String?
+  state      String?
+  postalCode String?
+  country    String?
+  client     Client?
+}
 
 // model Membership {
 //   id              Int                    @id @default(autoincrement())
