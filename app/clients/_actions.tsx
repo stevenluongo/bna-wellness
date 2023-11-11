@@ -144,3 +144,12 @@ export async function deleteClient(id: string) {
     console.log(e);
   }
 }
+
+export async function getClients() {
+  const clients = await prisma.client.findMany({
+    include: {
+      address: true,
+    },
+  });
+  return clients;
+}

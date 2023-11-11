@@ -6,15 +6,14 @@ import { redirect } from "next/navigation";
 import { useClientsStore } from "@/lib/store";
 
 export default function DeleteClientForm({ id }: { id?: string }) {
+  const toggleDeleteClientModal = useClientsStore(
+    (state) => state.toggleDeleteClientModal
+  );
   if (!id) {
     return null;
   }
 
   const deleteClientWithId = deleteClient.bind(null, id);
-
-  const toggleDeleteClientModal = useClientsStore(
-    (state) => state.toggleDeleteClientModal
-  );
 
   const action = () => {
     deleteClientWithId();

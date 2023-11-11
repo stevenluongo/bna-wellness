@@ -21,6 +21,10 @@ export default function CreateClientForm() {
   const { data: session } = useSession();
   const id = session?.user?.id;
 
+  const toggleCreateClientModal = useClientsStore(
+    (state) => state.toggleCreateClientModal
+  );
+
   if (!id) {
     return null;
   }
@@ -49,10 +53,6 @@ export default function CreateClientForm() {
       },
     };
   }
-
-  const toggleCreateClientModal = useClientsStore(
-    (state) => state.toggleCreateClientModal
-  );
 
   const action: () => void = handleSubmit(async (data) => {
     const fd = new FormData();

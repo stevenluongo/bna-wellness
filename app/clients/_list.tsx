@@ -17,12 +17,12 @@ import {
   Button,
   Menu,
 } from "@mantine/core";
-import { getClients } from "./page";
 import { useClientsStore } from "@/lib/store";
 import CreateClientForm from "./_forms/createClient";
 import { useRouter } from "next/navigation";
 import EditClientForm from "./_forms/editClient";
 import DeleteClientForm from "./_forms/deleteClient";
+import { getClients } from "./_actions";
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 type NonNullableClientsWithAddress = NonNullable<
