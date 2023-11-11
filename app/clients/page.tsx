@@ -1,10 +1,18 @@
 import Link from "next/link";
-import { fetchAllClients } from "./_actions";
-import { unstable_noStore as noStore } from "next/cache";
+import prisma from "@/lib/prisma";
+
+async function getClients() {
+  "use server";
+  const clients = await prisma.client.findMany({
+    include: {
+      address: true,
+    },
+  });
+  return clients;
+}
 
 export default async function Page() {
-  noStore();
-  const clients = await fetchAllClients();
+  const clients = await getClients();
   return (
     <div>
       <p>Clients!</p>

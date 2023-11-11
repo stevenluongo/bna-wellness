@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { createClient, fetchClientById } from "../_actions";
 import Input from "@/app/register/_input";
 import { useForm } from "react-hook-form";
-import { redirect } from "next/navigation";
 import { faker } from "@faker-js/faker";
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
@@ -78,7 +77,6 @@ export default function CreateClientForm() {
     }
 
     toast.success("Client created");
-    redirect("/clients");
   });
 
   const formatFields = () => {
