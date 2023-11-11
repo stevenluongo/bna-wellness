@@ -10,19 +10,6 @@ if (!process.env.STRIPE_SECRET_KEY) {
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-export async function fetchAllClients() {
-  try {
-    const clients = await prisma.client.findMany({
-      include: {
-        address: true,
-      },
-    });
-    return clients;
-  } catch (e) {
-    console.log(e);
-  }
-}
-
 export async function fetchClientById(id: string) {
   try {
     const client = await prisma.client.findUnique({

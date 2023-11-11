@@ -1,5 +1,6 @@
 import Link from "next/link";
 import prisma from "@/lib/prisma";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getClients() {
   "use server";
@@ -12,6 +13,7 @@ async function getClients() {
 }
 
 export default async function Page() {
+  noStore();
   const clients = await getClients();
   return (
     <div>
