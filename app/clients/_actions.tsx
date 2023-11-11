@@ -2,6 +2,13 @@
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import Stripe from "stripe";
+
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error("Missing Stripe secret key");
+}
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function fetchAllClients() {
   try {
@@ -55,6 +62,20 @@ export async function createClient(formData: FormData) {
     const postalCode = formData.get("address.postalCode") as string;
     const country = formData.get("address.country") as string;
 
+    const customer = await stripe.customers.create({
+      email,
+      name: `${firstName} ${lastName}`,
+      phone: cellNumber,
+      address: {
+        line1,
+        line2,
+        city,
+        state,
+        postal_code: postalCode,
+        country,
+      },
+    });
+
     const client = await prisma.client.create({
       data: {
         firstName,
@@ -65,6 +86,7 @@ export async function createClient(formData: FormData) {
         homeNumber,
         cellNumber,
         image,
+        stripeCustomerId: customer.id,
         address: {
           create: {
             line1,

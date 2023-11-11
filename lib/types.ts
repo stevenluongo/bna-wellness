@@ -7,6 +7,7 @@ export type User = {
   hash: string;
   createdAt: Date;
   id: string;
+  role: "ADMIN" | "USER";
 };
 
 // id               String         @id @default(cuid())

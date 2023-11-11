@@ -6,7 +6,7 @@ import Input from "@/app/register/_input";
 import { useForm } from "react-hook-form";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 type NonNullableClientWithAddress = NonNullable<
@@ -22,8 +22,6 @@ export default function EditClientForm({
     register,
     handleSubmit,
     reset,
-    watch,
-    getValues,
     formState: { dirtyFields },
   } = useForm<NonNullableClientWithAddress>({
     defaultValues: {
@@ -63,7 +61,7 @@ export default function EditClientForm({
         country: client.address?.country,
       },
     });
-  }, [client]);
+  }, [client, reset]);
 
   if (!client) return redirect("/clients");
 
