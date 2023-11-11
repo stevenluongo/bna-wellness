@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/navbar/navbar";
 import { useNavbarStore } from "@/lib/store";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { twMerge } from "tailwind-merge";
 import { Inter } from "next/font/google";
 
@@ -17,6 +17,9 @@ export default function App({ children }: { children: React.ReactNode }) {
   const isOpen = useNavbarStore((state) => state.isOpen);
 
   if (status === "loading") return <div>Loading...</div>;
+
+  if (status === "unauthenticated") return signIn();
+
   return (
     <main className={inter.variable}>
       <div

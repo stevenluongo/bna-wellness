@@ -13,6 +13,7 @@
     "@preact/signals": "^1.2.1",
     "@prisma/client": "^5.5.2",
     "@svgr/webpack": "^8.1.0",
+    "@tanstack/react-table": "^8.10.7",
     "next": "14.0.1",
     "next-auth": "^4.24.4",
     "react": "^18",

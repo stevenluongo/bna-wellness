@@ -6,6 +6,7 @@ import { createClient, fetchClientById } from "../_actions";
 import Input from "@/app/register/_input";
 import { useForm } from "react-hook-form";
 import { faker } from "@faker-js/faker";
+import { redirect } from "next/navigation";
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 type NonNullableClientWithAddress = NonNullable<
@@ -77,6 +78,7 @@ export default function CreateClientForm() {
     }
 
     toast.success("Client created");
+    redirect("/clients");
   });
 
   const formatFields = () => {

@@ -49,19 +49,19 @@ export async function createClient(formData: FormData) {
     const postalCode = formData.get("address.postalCode") as string;
     const country = formData.get("address.country") as string;
 
-    const customer = await stripe.customers.create({
-      email,
-      name: `${firstName} ${lastName}`,
-      phone: cellNumber,
-      address: {
-        line1,
-        line2,
-        city,
-        state,
-        postal_code: postalCode,
-        country,
-      },
-    });
+    // const customer = await stripe.customers.create({
+    //   email,
+    //   name: `${firstName} ${lastName}`,
+    //   phone: cellNumber,
+    //   address: {
+    //     line1,
+    //     line2,
+    //     city,
+    //     state,
+    //     postal_code: postalCode,
+    //     country,
+    //   },
+    // });
 
     const client = await prisma.client.create({
       data: {
@@ -73,7 +73,7 @@ export async function createClient(formData: FormData) {
         homeNumber,
         cellNumber,
         image,
-        stripeCustomerId: customer.id,
+        // stripeCustomerId: customer.id,
         address: {
           create: {
             line1,
