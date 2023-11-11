@@ -104,6 +104,11 @@ export async function editClient(id: string, formData: FormData) {
         address[key.replace("address.", "")] = JSON.parse(value);
         continue;
       }
+      if (key === "age") {
+        // @ts-ignore
+        updates[key] = parseInt(JSON.parse(value));
+        continue;
+      }
       // @ts-ignore
       updates[key] = JSON.parse(value);
     }

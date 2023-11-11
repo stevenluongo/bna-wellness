@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { useEffect } from "react";
+import { useClientsStore } from "@/lib/store";
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 type NonNullableClientWithAddress = NonNullable<
@@ -18,6 +19,9 @@ export default function EditClientForm({
 }: {
   client: NonNullableClientWithAddress;
 }) {
+  const toggleEditClientModal = useClientsStore(
+    (state) => state.toggleEditClientModal
+  );
   const {
     register,
     handleSubmit,
@@ -25,40 +29,40 @@ export default function EditClientForm({
     formState: { dirtyFields },
   } = useForm<NonNullableClientWithAddress>({
     defaultValues: {
-      firstName: client.firstName,
-      lastName: client.lastName,
-      email: client.email,
-      age: client.age,
-      homeNumber: client.homeNumber,
-      cellNumber: client.cellNumber,
-      image: client.image,
+      firstName: client?.firstName,
+      lastName: client?.lastName,
+      email: client?.email,
+      age: client?.age,
+      homeNumber: client?.homeNumber,
+      cellNumber: client?.cellNumber,
+      image: client?.image,
       address: {
-        line1: client.address?.line1,
-        line2: client.address?.line2,
-        city: client.address?.city,
-        state: client.address?.state,
-        postalCode: client.address?.postalCode,
-        country: client.address?.country,
+        line1: client?.address?.line1,
+        line2: client?.address?.line2,
+        city: client?.address?.city,
+        state: client?.address?.state,
+        postalCode: client?.address?.postalCode,
+        country: client?.address?.country,
       },
     },
   });
 
   useEffect(() => {
     reset({
-      firstName: client.firstName,
-      lastName: client.lastName,
-      email: client.email,
-      age: client.age,
-      homeNumber: client.homeNumber,
-      cellNumber: client.cellNumber,
-      image: client.image,
+      firstName: client?.firstName,
+      lastName: client?.lastName,
+      email: client?.email,
+      age: client?.age,
+      homeNumber: client?.homeNumber,
+      cellNumber: client?.cellNumber,
+      image: client?.image,
       address: {
-        line1: client.address?.line1,
-        line2: client.address?.line2,
-        city: client.address?.city,
-        state: client.address?.state,
-        postalCode: client.address?.postalCode,
-        country: client.address?.country,
+        line1: client?.address?.line1,
+        line2: client?.address?.line2,
+        city: client?.address?.city,
+        state: client?.address?.state,
+        postalCode: client?.address?.postalCode,
+        country: client?.address?.country,
       },
     });
   }, [client, reset]);
@@ -104,6 +108,8 @@ export default function EditClientForm({
     await editClientWithId(fd);
 
     toast.success("Client successfully updated");
+
+    toggleEditClientModal(null);
   });
 
   return (

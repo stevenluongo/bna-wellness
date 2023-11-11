@@ -7,6 +7,8 @@ import Input from "@/app/register/_input";
 import { useForm } from "react-hook-form";
 import { faker } from "@faker-js/faker";
 import { redirect } from "next/navigation";
+import { useClientsStore } from "@/lib/store";
+import { Button } from "@mantine/core";
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 type NonNullableClientWithAddress = NonNullable<
@@ -48,6 +50,10 @@ export default function CreateClientForm() {
     };
   }
 
+  const toggleCreateClientModal = useClientsStore(
+    (state) => state.toggleCreateClientModal
+  );
+
   const action: () => void = handleSubmit(async (data) => {
     const fd = new FormData();
 
@@ -78,7 +84,7 @@ export default function CreateClientForm() {
     }
 
     toast.success("Client created");
-    redirect("/clients");
+    toggleCreateClientModal();
   });
 
   const formatFields = () => {
@@ -101,7 +107,6 @@ export default function CreateClientForm() {
 
   return (
     <>
-      <button onClick={formatFields}>Random Client</button>
       <form action={action}>
         <Input placeholder="First Name" {...register("firstName")} required />
         <Input placeholder="Last Name" {...register("lastName")} required />
@@ -123,7 +128,22 @@ export default function CreateClientForm() {
         <Input placeholder="State" {...register("address.state")} />
         <Input placeholder="Postal Code" {...register("address.postalCode")} />
         <Input placeholder="Country" {...register("address.country")} />
-        <button type="submit">Create</button>
+        <div className="flex gap-4">
+          <Button
+            variant="filled"
+            type="submit"
+            className="bg-[#2D68FE] font-inter text-white flex gap-x-2 items-center py-2 px-4 rounded-lg"
+          >
+            Create
+          </Button>
+          <Button
+            variant="filled"
+            onClick={formatFields}
+            className="bg-[#2D68FE] font-inter text-white flex gap-x-2 items-center py-2 px-4 rounded-lg"
+          >
+            Generate Random Data
+          </Button>
+        </div>
       </form>
     </>
   );

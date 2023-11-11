@@ -17,8 +17,7 @@ export default async function Page() {
   noStore();
   const clients = await getClients();
   return (
-    <div>
-      <Link href="/clients/create">Create Client</Link>
+    <div className="p-5 flex flex-col gap-y-4">
       <ClientList clients={clients} />
     </div>
   );
