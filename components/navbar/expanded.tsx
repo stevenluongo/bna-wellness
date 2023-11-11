@@ -20,7 +20,7 @@ export default function ExpandedNavbar() {
   const pathname = usePathname();
 
   return (
-    <>
+    <div className="fixed w-[260px] h-full p-5 box-border flex flex-col justify-between">
       <div className="flex flex-col gap-y-5">
         <span
           className="flex gap-3 items-center p-2 h-[60px] cursor-pointer"
@@ -96,6 +96,6 @@ export default function ExpandedNavbar() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

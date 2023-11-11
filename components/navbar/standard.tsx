@@ -5,7 +5,6 @@ import { signOut, useSession, signIn } from "next-auth/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
-
 import Person from "@/public/icons/person.svg";
 import Logout from "@/public/icons/u_sign-out-alt.svg";
 import Settings from "@/public/icons/u_setting.svg";
@@ -20,7 +19,7 @@ export default function StandardNavbar() {
   const pathname = usePathname();
 
   return (
-    <>
+    <div className="fixed w-[84px] h-full p-5 box-border flex flex-col justify-between">
       <div className="flex flex-col gap-y-5">
         <span
           className="flex items-center p-2 h-[60px] cursor-pointer"
@@ -83,6 +82,6 @@ export default function StandardNavbar() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
