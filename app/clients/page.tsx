@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { fetchAllClients } from "./_actions";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function Page() {
+  noStore();
   const clients = await fetchAllClients();
   return (
     <div>
